@@ -1,0 +1,42 @@
+name: Dependent Jobs
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "*.md"
+      - "!*.txt"
+env:
+  WORKFLOW_VAR: 'WORKFLOW VARIABLE'
+    
+jobs:
+  job-1:
+    name: 1st job
+    runs-on: ubuntu-24.04
+    env:
+      JOB_VAR: 'JOB'
+    steps:
+      - name: Step 1
+        env:
+          STEP_VAR: 'STEP'
+        run: |
+          echo "WorkflowVariable= $WORKFLOW_VAR"
+          echo "STEP_VAR= $STEP_VAR"
+          echo "JOB_VAR= $JOB_VAR"
+      - name: Step 2
+        run: |
+          echo "WorkflowVariable= $WORKFLOW_VAR"
+          echo "STEP_VAR= $STEP_VAR"
+          echo "JOB_VAR= $JOB_VAR"
+
+  job-2:
+    runs-on: ubuntu-24.04
+    needs: [job-1]
+    steps:
+      - name: Step 3
+        run: |
+          echo "WorkflowVariable= $WORKFLOW_VAR"
+          echo "STEP_VAR= $STEP_VAR"
+          echo "JOB_VAR= $JOB_VAR"
