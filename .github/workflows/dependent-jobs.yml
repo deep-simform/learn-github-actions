@@ -1,4 +1,4 @@
-name: Multiple Jobs
+name: Dependent Jobs
 
 on:
   workflow_dispatch:
@@ -6,6 +6,7 @@ on:
     
 jobs:
   job-1:
+    name: 1st job
     runs-on: ubuntu-24.04
     steps:
       - run: echo 'job 1'
