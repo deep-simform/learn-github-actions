@@ -22,9 +22,10 @@ jobs:
         env:
           STEP_VAR: 'STEP'
         run: |
-          echo "WorkflowVariable= $WORKFLOW_VAR"
-          echo "STEP_VAR= $STEP_VAR"
-          echo "JOB_VAR= $JOB_VAR"
+          console.log(`WorkflowVariable= ${process.env.WORKFLOW_VAR}`)
+          console.log(`STEP_VAR= ${process.env.STEP_VAR}`)
+          console.log(`JOB_VAR= ${process.env.JOB_VAR}`)
+        shell: node {0}
       - name: Step 2
         run: |
           echo "WorkflowVariable= $WORKFLOW_VAR"
@@ -36,7 +37,9 @@ jobs:
     steps:
       - name: Step 3
         run: |
-          print("WorkflowVariable= $WORKFLOW_VAR")
-          print("STEP_VAR= $STEP_VAR")
-          print("JOB_VAR= $JOB_VAR")
+          import os
+          
+          print(f"WorkflowVariable= {os.getenv('WORKFLOW_VAR')}")
+          print(f"STEP_VAR= {os.getenv('STEP_VAR')}")
+          print(f"JOB_VAR= {os.getenv('JOB_VAR')}")
         shell: python
