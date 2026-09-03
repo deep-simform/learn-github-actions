@@ -1,5 +1,2 @@
-# Reviewer assignment is handled by the GitHub Actions workflow:
-# .github/workflows/auto-assign-reviewers.yml
-#
-# main branch  → @priyanksimform + @urmil-sakariya-Simform
-# other branches → @priyanksimform only
+# PRs targeting this branch require review from:
+* @priyanksimform
