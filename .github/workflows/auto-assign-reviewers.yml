@@ -1,0 +1,38 @@
+name: Auto Assign Reviewers
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  assign-reviewers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign reviewers based on target branch
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const targetBranch = context.payload.pull_request.base.ref;
+            const prAuthor = context.payload.pull_request.user.login;
+
+            const mainReviewers = ['priyanksimform', 'urmil-sakariya-Simform'];
+            const defaultReviewers = ['priyanksimform'];
+
+            const reviewers = (targetBranch === 'main' ? mainReviewers : defaultReviewers)
+              .filter(r => r !== prAuthor);
+
+            if (reviewers.length === 0) {
+              console.log('No reviewers to assign (all are the PR author).');
+              return;
+            }
+
+            await github.rest.pulls.requestReviewers({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              reviewers,
+            });
+
+            console.log(`Target branch: ${targetBranch}`);
+            console.log(`Assigned reviewers: ${reviewers.join(', ')}`);

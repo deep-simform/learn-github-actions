@@ -1,6 +1,5 @@
-# All files
-* @priyanksimform @urmil-sakariya-Simform
-
-
-# @priyanksimform  (Web Team Head)   — primary reviewer, all branches
-# @urmil-sakariya-Simform             (Client)          — required reviewer on main branch
+# Reviewer assignment is handled by the GitHub Actions workflow:
+# .github/workflows/auto-assign-reviewers.yml
+#
+# main branch  → @priyanksimform + @urmil-sakariya-Simform
+# other branches → @priyanksimform only
